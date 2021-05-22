@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool IsActive;
-
-    [SerializeField]
-    private GameObject playerModel;
+    [Space(10)][Header("Bindings")]
+    [SerializeField] private GameObject playerModel;
+    [SerializeField] private Rigidbody myRb;
+    [SerializeField] private Joystick joystick;
+    [SerializeField] private Animator playerAnim;
+    [SerializeField] private GameObject walkIndicator;
     //[SerializeField]
     //private PlayerCamera cam;
+    [Space(10)][Header("Arrangements")]
+    [SerializeField] private float speedNormal;
+    [SerializeField] private float speedBoosted;
+    [SerializeField] private float boostDuration;
 
-    //If there is a free play
-    public float speed;
-    [SerializeField]
-    private Rigidbody myRb;
-    [SerializeField]
-    private Joystick joystick;
-    [SerializeField]
-    private Animator playerAnim;
-
-    private int collectedCoinCount;
+    private float playerSpeed;
+    private bool IsActive;
+    private bool isCollectedKeys;
+    private bool cameraZoomed;
 
     private void Start()
     {
@@ -29,22 +29,24 @@ public class PlayerController : MonoBehaviour
 
     public void Initialize()
     {
-
+        playerSpeed = speedNormal;
     }
 
     public void StartGame()
     {
         //PlayerAccount.Module.Refresh();
         IsActive = true;
+        playerSpeed = speedNormal;
         myRb.isKinematic = false;
         //agent.gameObject.SetActive(true);
         //agent.StartGame();
         //cam.StartGame();
     }
 
-    public void SetPlayerPosition(Vector3 pos)
+    public void SetPlayerPosition(Vector3 pos, Quaternion rot)
     {
         myRb.transform.position = pos;
+        myRb.transform.rotation = rot;
     }
 
     public void GameOver()
@@ -67,22 +69,31 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Debug.Log(joystick.Direction.magnitude);
-        //Controls
-        //float horizontal = Input.GetAxisRaw("Horizontal");
-        //float vertical = Input.GetAxisRaw("Vertical");
 
         //Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         if(joystick.Direction.magnitude != 0)
         {
             playerAnim.SetBool("isRunning", true);
             transform.forward = new Vector3(joystick.Direction.x, 0, joystick.Direction.y);
-            myRb.MovePosition(myRb.position + (transform.forward.normalized * Time.deltaTime * speed));
+            walkIndicator.transform.position = new Vector3(transform.position.x + joystick.Direction.x/2f, walkIndicator.transform.position.y, transform.position.z + joystick.Direction.y/2f);
+            myRb.MovePosition(myRb.position + (transform.forward.normalized * Time.deltaTime * playerSpeed));
+            if (cameraZoomed)
+            {
+                cameraZoomed = false;
+                CameraManager.Instance.DoZoomIn();
+            }
 
         } else
         {
             playerAnim.SetBool("isRunning", false);
+            myRb.velocity = Vector3.zero;
+            walkIndicator.transform.position = new Vector3(transform.position.x, walkIndicator.transform.position.y, transform.position.z);
+            if (!cameraZoomed)
+            {
+                cameraZoomed = true;
+                CameraManager.Instance.DoZoomOut();
+            }
         }
-
     }
+
 }

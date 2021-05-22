@@ -13,6 +13,7 @@ public class GameCoordinator : MonoBehaviour
     private Level currentLevel;
     public Level CurrentLevel { get {return currentLevel; } }
 
+
     public bool isDebugLevel;
     public Level testLevel;
 
@@ -31,7 +32,8 @@ public class GameCoordinator : MonoBehaviour
             LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
         else
             LoadTestLevel();
-        playerController.SetPlayerPosition(currentLevel.playerStartPos.position);
+        playerController.SetPlayerPosition(currentLevel.playerStartPos.position, currentLevel.playerStartPos.rotation);
+        CameraManager.Instance.ActivateCamera(0);
         PoolManager.Instance.DismissPools();
         //playerController.Reload();
     }
@@ -73,6 +75,7 @@ public class GameCoordinator : MonoBehaviour
     public void StartGame()
     {
         playerController.StartGame();
+        CameraManager.Instance.ActivateCamera(1);
         if (!isDebugLevel)
             LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
         else
@@ -95,6 +98,6 @@ public class GameCoordinator : MonoBehaviour
         //PlayerPrefs.SetInt("levelIndex", PlayerPrefs.GetInt("levelIndex") + 1);
         //PlayerPrefs.SetInt("coinCount", PlayerPrefs.GetInt("coinCount") + PlayerController.Instance.collectedCoinCount);
         Reload();
-
     }
+
 }

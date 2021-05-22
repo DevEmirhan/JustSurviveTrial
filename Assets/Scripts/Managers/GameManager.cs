@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         UIManager.Instance.RefreshPanel(0);
+        ShopManager.Instance.Instantiate();
         gameCoordinator.Reload();
     }
     public void StartGame()

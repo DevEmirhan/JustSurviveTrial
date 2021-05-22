@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : Singleton<UIManager>
 {
     public List<MainPanel> MainPanels = new List<MainPanel>();
+
     private int currentScreen;
 
     public void OpenPage(int index)
@@ -32,6 +33,4 @@ public class UIManager : Singleton<UIManager>
     {
         MainPanels[currentScreen].Refresh();
     }
-
-
 }

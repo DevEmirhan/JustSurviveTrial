@@ -8,6 +8,7 @@ public class Save
     public int CurrentLevel = 1;
     public int RandomLoadedLevel = 1;
     public int CoinAmount = 0;
+    public int selectedColor = 0;
     public bool IsSoundOff;
     public bool IsMusicOff;
 }
