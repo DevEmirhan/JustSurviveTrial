@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -29,8 +30,8 @@ public class UIManager : Singleton<UIManager>
     {
         MainPanels[Index].Refresh();
     }
-    public void RefreshPanelAuto()
+    public void UpdateKeys()
     {
-        MainPanels[currentScreen].Refresh();
+        MainPanels[1].GetComponent<GamePanel>().FoundKey();
     }
 }

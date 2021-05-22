@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameCoordinator : MonoBehaviour
 {
+    [Header("Bindings")]
     [SerializeField]
     PlayerController playerController;
 
@@ -13,7 +14,7 @@ public class GameCoordinator : MonoBehaviour
     private Level currentLevel;
     public Level CurrentLevel { get {return currentLevel; } }
 
-
+    [Header("Settings")]
     public bool isDebugLevel;
     public Level testLevel;
 

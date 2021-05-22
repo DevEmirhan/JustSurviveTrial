@@ -5,88 +5,81 @@ using UnityEngine.UI;
 
 public class GamePanel : MainPanel
 {
-    [Header("UPDATE FIELDS")]
-    public Text levelText;
-    public Text nextLevelText;
-    public Text coinText;
+    [Header("Bindings")]
+    [SerializeField] private GameCoordinator gameCoordinator;
 
-    private int coinsForThisLevel;
-    public int CoinsForThisLevel { get { return CoinsForThisLevel; } }
+    [Header("KEYS")]
+    [SerializeField] private List<GameObject> Keys = new List<GameObject>();
+    [SerializeField] private List<Image> KeyImages = new List<Image>();
 
-    [SerializeField]
-    private Slider progressBar;
-    [HideInInspector]
-    public float coinMultiplier = 1f;
+    [Header("Countdown")]
+    [SerializeField] private Text countdownText;
 
-    [SerializeField]
-    private GameCoordinator gameCo;
+    private bool isActiveForCountdown = false;
+    private bool colorChanged = false;
+    private int keyRequirementForThisLevel = 3;
+    private int currentKeyCount = 0;
+    private float levelTimeLimit = 30f;
 
-    private static  GamePanel instance;
-
-    public static GamePanel Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<GamePanel>();
-            }
-
-            return instance;
-        }
-    }
-    protected virtual void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this as GamePanel;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
+  
 
     public override void Refresh()
     {
-        //levelText.text = "" + (SaveManager.Instance.CurrentSave.CurrentLevel+1);
-        //nextLevelText.text = "" + (SaveManager.Instance.CurrentSave.CurrentLevel + 2);
-        //coinText.text = "" + SaveManager.Instance.CurrentSave.CoinAmount;
-        //progressBar.value = 0f;
-        //coinsForThisLevel = 0;
+        levelTimeLimit = gameCoordinator.CurrentLevel.levelTimeLimit;
+        keyRequirementForThisLevel = gameCoordinator.CurrentLevel.keyRequirement;
+        currentKeyCount = 0;
+        ActivateKeySlots(keyRequirementForThisLevel);
+        CloseAllKeyUI();
+        countdownText.color = Color.white;
+        isActiveForCountdown = true;
     }
 
-    public void IncreaseCoin(int coinAmount)
+    private void Update()
     {
-        //coinsForThisLevel += coinAmount;
-        //coinText.text = "" + (SaveManager.Instance.CurrentSave.CoinAmount + coinsForThisLevel);
+        if(GameManager.Instance.CurrentState == GameManager.GameState.Gameplay && isActiveForCountdown)
+        {
+            levelTimeLimit -= Time.deltaTime;
+            int seconds = (int)(levelTimeLimit % 60);
+            int munites = (int)(levelTimeLimit / 60) % 60;
+            string timerString = string.Format("{0:00}:{1:00}", munites, seconds);
+            countdownText.text = timerString;
+            if (levelTimeLimit >0 && levelTimeLimit <=10 && !colorChanged)
+            {
+                countdownText.color = Color.red;
+                colorChanged = true;
+            } else if ( levelTimeLimit <= 0)
+            {
+                levelTimeLimit = 0f;
+                countdownText.text = "OVER";
+                //gameCoordinator.Decide();
+                isActiveForCountdown = false;
+            } 
+
+        }
     }
 
-    //public void DeadEnemy()
-    //{
-    //    progressBar.value = gameCo.currentLevel.GetRatio();
-    //}
-
-    public int CalculateGameFinalMult()
+    public void ActivateKeySlots(int requirement)
     {
-        //if(progressBar.value < 0.6f)
-        //{
-        //    coinMultiplier = 1f;
-        //} else if( progressBar.value >= 0.6f && progressBar.value < 0.85f)
-        //{
-        //    coinMultiplier = 1.5f;
-        //}
-        //else if (progressBar.value >= 0.85f)
-        //{
-        //    coinMultiplier = 2f;
-        //}
-        int finalM = (int)(coinMultiplier * coinsForThisLevel);
-        return finalM;
-
+        foreach(var key in Keys)
+        {
+            key.SetActive(false);
+        }
+        for (int i = 0; i < keyRequirementForThisLevel; i++)
+        {
+            Keys[i].SetActive(true);
+        }
     }
-
-
-
+    public void CloseAllKeyUI()
+    {
+        foreach(var keyImg in KeyImages)
+        {
+            keyImg.enabled = false;
+        }
+    }
+    public void FoundKey()
+    {
+        currentKeyCount++;
+        KeyImages[currentKeyCount - 1].enabled = true;
+    }
 
 }

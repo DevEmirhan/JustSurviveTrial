@@ -95,5 +95,25 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (IsActive)
+        {
+            if(other.gameObject.tag == "Key")
+            {
+                Destroy(other.gameObject);
+                UIManager.Instance.UpdateKeys();
+            } else if(other.gameObject.tag == "Speed")
+            {
+                Destroy(other.gameObject);
+                StartCoroutine(SpeedBoost());
+            }
+        }
+    }
+    IEnumerator SpeedBoost()
+    {
+        playerSpeed = speedBoosted;
+        yield return new WaitForSeconds(boostDuration);
+        playerSpeed = speedNormal;
+    }
 }
