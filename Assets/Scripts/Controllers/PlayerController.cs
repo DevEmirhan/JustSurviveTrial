@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
+        Initialize(); 
     }
 
     public void Initialize()
@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        Debug.Log(joystick.Direction.magnitude);
         //Controls
         //float horizontal = Input.GetAxisRaw("Horizontal");
         //float vertical = Input.GetAxisRaw("Vertical");
