@@ -13,6 +13,9 @@ public class GameCoordinator : MonoBehaviour
     private Level currentLevel;
     public Level CurrentLevel { get {return currentLevel; } }
 
+    public bool isDebugLevel;
+    public Level testLevel;
+
     public void Awake()
     {
         Application.targetFrameRate = 60;
@@ -24,7 +27,10 @@ public class GameCoordinator : MonoBehaviour
 
     public void Reload()
     {
-        LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
+        if (!isDebugLevel)
+            LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
+        else
+            LoadTestLevel();
         playerController.SetPlayerPosition(currentLevel.playerStartPos.position);
         PoolManager.Instance.DismissPools();
         //playerController.Reload();
@@ -54,15 +60,23 @@ public class GameCoordinator : MonoBehaviour
         currentLevel = Instantiate(levels[levelID]);
         currentLevel.transform.position = Vector3.zero;
         currentLevel.gameObject.SetActive(true);
+    }
+    public void LoadTestLevel()
+    {
+        testLevel.transform.position = Vector3.zero;
+        currentLevel = testLevel;
+    }
         
 
 
-    }
 
     public void StartGame()
     {
         playerController.StartGame();
-        LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
+        if (!isDebugLevel)
+            LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
+        else
+            LoadTestLevel();
         //prog.ProgressBarReset();
 
     }
