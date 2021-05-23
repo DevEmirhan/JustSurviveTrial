@@ -7,19 +7,21 @@ public class Level : MonoBehaviour
     public float levelTimeLimit = 30f;
     public int keyRequirement = 3;
     public Transform playerStartPos;
-    //public void StartGame()
-    //{
-    //    foreach (var obs in obstacles)
-    //    {
-    //        obs.StartMovement();
-    //    }
-    //}
+    [SerializeField] private List<Trap> obstacles = new List<Trap>();
 
-    //public void EndGame()
-    //{
-    //    foreach (var obs in obstacles)
-    //    {
-    //        obs.StopMovement();
-    //    }
-    //}
+    public void StartGame()
+    {
+        foreach (var obs in obstacles)
+        {
+            obs.ActivateTrap();
+        }
+    }
+
+    public void EndGame()
+    {
+        foreach (var obs in obstacles)
+        {
+            obs.DeactivateTrap();
+        }
+    }
 }

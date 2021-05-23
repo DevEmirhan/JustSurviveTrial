@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Joystick joystick;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private GameObject walkIndicator;
-    //[SerializeField]
-    //private PlayerCamera cam;
+
     [Space(10)][Header("Arrangements")]
     [SerializeField] private float speedNormal;
     [SerializeField] private float speedBoosted;
@@ -51,13 +50,14 @@ public class PlayerController : MonoBehaviour
 
     public void GameOver()
     {
-        IsActive = false;
         //agent.GameOver();
     }
 
     public void Reload()
     {
         //agent.gameObject.SetActive(false);
+        playerAnim.Rebind();
+        playerAnim.speed = 1f;
         myRb.isKinematic = true;
         IsActive = false;
     }
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         //Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         if(joystick.Direction.magnitude != 0)
         {
-            playerAnim.SetBool("isRunning", true);
+            playerAnim.SetBool("IsRunning", true);
             transform.forward = new Vector3(joystick.Direction.x, 0, joystick.Direction.y);
             walkIndicator.transform.position = new Vector3(transform.position.x + joystick.Direction.x/2f, walkIndicator.transform.position.y, transform.position.z + joystick.Direction.y/2f);
             myRb.MovePosition(myRb.position + (transform.forward.normalized * Time.deltaTime * playerSpeed));
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         } else
         {
-            playerAnim.SetBool("isRunning", false);
+            playerAnim.SetBool("IsRunning", false);
             myRb.velocity = Vector3.zero;
             walkIndicator.transform.position = new Vector3(transform.position.x, walkIndicator.transform.position.y, transform.position.z);
             if (!cameraZoomed)
@@ -107,13 +107,35 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 StartCoroutine(SpeedBoost());
+            } else if(other.gameObject.tag == "Death")
+            {
+                StartCoroutine(DeathSequence());
+            }
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (IsActive)
+        {
+            if(collision.gameObject.tag == "Death")
+            {
+                StartCoroutine(DeathSequence());
             }
         }
     }
     IEnumerator SpeedBoost()
     {
         playerSpeed = speedBoosted;
+        playerAnim.speed *= 1.5f;
         yield return new WaitForSeconds(boostDuration);
         playerSpeed = speedNormal;
+        playerAnim.speed /= 1.5f;
+    }
+    IEnumerator DeathSequence()
+    {
+        IsActive = false;
+        playerAnim.Play("Dead");
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.GameOver();
     }
 }

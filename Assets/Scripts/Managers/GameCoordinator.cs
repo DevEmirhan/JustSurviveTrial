@@ -34,9 +34,9 @@ public class GameCoordinator : MonoBehaviour
         else
             LoadTestLevel();
         playerController.SetPlayerPosition(currentLevel.playerStartPos.position, currentLevel.playerStartPos.rotation);
+        playerController.Reload();
         CameraManager.Instance.ActivateCamera(0);
         PoolManager.Instance.DismissPools();
-        //playerController.Reload();
     }
 
     private void destroyLastLevel()
@@ -81,18 +81,22 @@ public class GameCoordinator : MonoBehaviour
             LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
         else
             LoadTestLevel();
+
+        currentLevel.StartGame();
         //prog.ProgressBarReset();
 
     }
 
     public void GameOver()
     {
+        currentLevel.EndGame();
         //playerController.GameOver();
         Reload();
 
     }
     public void WinGame()
     {
+        currentLevel.EndGame();
         //playerController.WinGame();
         SaveManager.Instance.CurrentSave.CurrentLevel++;
         SaveManager.Instance.Save();
