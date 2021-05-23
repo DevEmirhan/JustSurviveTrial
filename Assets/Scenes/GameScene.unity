@@ -4058,22 +4058,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1009808677 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1009808677, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-  m_PrefabInstance: {fileID: 1308537621041622492}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1009808678 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1009808678, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-  m_PrefabInstance: {fileID: 1308537621041622492}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2623a14fdd8f6964b9b9924bfff0ed27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1068688299
 GameObject:
   m_ObjectHideFlags: 0
@@ -7692,26 +7676,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1009808678, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-      propertyPath: spikeAC
-      value: 
-      objectReference: {fileID: 1009808677}
-    - target: {fileID: 1877139962, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-      propertyPath: m_TagString
-      value: Death
-      objectReference: {fileID: 0}
-    - target: {fileID: 1877139964, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308537620856736496, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-      propertyPath: obstacles.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1308537620856736496, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
-      propertyPath: obstacles.Array.data[0]
-      value: 
-      objectReference: {fileID: 1009808678}
     - target: {fileID: 1308537620856736502, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
       propertyPath: m_Name
       value: Level1

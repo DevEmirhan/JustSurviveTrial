@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spikes : Trap
+public class FireGrill : Trap
 {
-    [SerializeField] private GameObject spikes;
-    [SerializeField] private Collider spikeCol;
-    [SerializeField] private Animator spikeAC;
+    [SerializeField] private Collider fireCol;
+    [SerializeField] private GameObject fireVFX;
 
-    
     private float repeatTime = 0f;
     private float additionalRandomTime;
 
@@ -17,22 +15,24 @@ public class Spikes : Trap
         base.ActivateTrap();
         additionalRandomTime = Random.Range(0.1f, 0.4f);
         repeatTime = waitBeforeActivationTime + additionalRandomTime;
-        StartCoroutine(ThrowSpikes());
+        StartCoroutine(ThrowFire());
     }
     public override void DeactivateTrap()
     {
-        StopCoroutine(ThrowSpikes());
+        StopCoroutine(ThrowFire());
         base.DeactivateTrap();
     }
 
-    IEnumerator ThrowSpikes()
+    IEnumerator ThrowFire()
     {
         while (isActivated)
         {
             yield return new WaitForSeconds(repeatTime);
-            spikeAC.Play("SpikeOpen");
+            fireVFX.SetActive(true);
+            fireCol.enabled = true;
             yield return new WaitForSeconds(activationTime);
-            spikeAC.Play("SpikeClose");
+            fireVFX.SetActive(false);
+            fireCol.enabled = false;
         }
     }
 }
