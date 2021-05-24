@@ -463,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f16698c8b40564bb0d7f79f6070b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinValue: 50
   levelTimeLimit: 45
   keyRequirement: 3
   playerStartPos: {fileID: 1308537621076665373}

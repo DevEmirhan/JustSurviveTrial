@@ -28,6 +28,7 @@ public class BlackHole : Enemy
 
     public override void DeactivateEnemy()
     {
+        holeNavMesh.isStopped = true;
         base.DeactivateEnemy();
     }
 
@@ -63,5 +64,8 @@ public class BlackHole : Enemy
         holeNavMesh.isStopped = false;
         readyForNextPos = false;
     }
-
+    public void PlayerCatched()
+    {
+        DeactivateEnemy();
+    }
 }

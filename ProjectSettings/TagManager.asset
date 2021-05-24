@@ -9,6 +9,7 @@ TagManager:
   - Safe
   - Death
   - Trap
+  - Hole
   layers:
   - Default
   - TransparentFX

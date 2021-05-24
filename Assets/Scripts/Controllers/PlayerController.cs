@@ -110,10 +110,15 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(SpeedBoost());
             } else if(other.gameObject.tag == "Trap")
             {
-                StartCoroutine(DeathSequence());
+                StartCoroutine(DeathSequence("Dead"));
             } else if (other.gameObject.tag == "Death")
             {
-                StartCoroutine(DeathSequence());
+                //Might be ragdoll death
+                StartCoroutine(DeathSequence("Dead"));
+            } else if(other.gameObject.tag == "Hole")
+            {
+                other.GetComponent<BlackHole>().PlayerCatched();
+                StartCoroutine(DeathSequence("Dead3")); 
             }
         }
     }
@@ -123,7 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             if(collision.gameObject.tag == "Death")
             {
-                StartCoroutine(DeathSequence());
+                StartCoroutine(DeathSequence("Dead"));
             }
         }
     }
@@ -138,7 +143,7 @@ public class PlayerController : MonoBehaviour
     }
     public void TimesUp()
     {
-        StartCoroutine(TimesUpSequence());
+        StartCoroutine(DeathSequence("Crying"));
     }
     IEnumerator SpeedBoost()
     {
@@ -148,17 +153,10 @@ public class PlayerController : MonoBehaviour
         playerSpeed = speedNormal;
         playerAnim.speed /= 1.5f;
     }
-    IEnumerator TimesUpSequence()
+    IEnumerator DeathSequence(string animStyle)
     {
         IsActive = false;
-        playerAnim.Play("Crying");
-        yield return new WaitForSeconds(3f);
-        GameManager.Instance.GameOver();
-    }
-    IEnumerator DeathSequence()
-    {
-        IsActive = false;
-        playerAnim.Play("Dead");
+        playerAnim.Play(animStyle);
         yield return new WaitForSeconds(3f);
         GameManager.Instance.GameOver();
     }
@@ -171,3 +169,4 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.WinGame();
     }
 }
+ 
