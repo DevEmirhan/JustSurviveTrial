@@ -75,7 +75,7 @@ public class GameCoordinator : MonoBehaviour
 
     public void StartGame()
     {
-        playerController.StartGame();
+        playerController.StartGame(currentLevel.keyRequirement);
         CameraManager.Instance.ActivateCamera(1);
         if (!isDebugLevel)
             LoadLevel(SaveManager.Instance.CurrentSave.CurrentLevel);
@@ -103,6 +103,13 @@ public class GameCoordinator : MonoBehaviour
         //PlayerPrefs.SetInt("levelIndex", PlayerPrefs.GetInt("levelIndex") + 1);
         //PlayerPrefs.SetInt("coinCount", PlayerPrefs.GetInt("coinCount") + PlayerController.Instance.collectedCoinCount);
         //Reload();
+    }
+    public void DecideOnTimesUp()
+    {
+        if (!playerController.isCollectedKeys)
+        {
+            playerController.TimesUp();
+        }
     }
 
 }

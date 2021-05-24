@@ -51,7 +51,7 @@ public class GamePanel : MainPanel
             {
                 levelTimeLimit = 0f;
                 countdownText.text = "OVER";
-                //gameCoordinator.Decide();
+                gameCoordinator.DecideOnTimesUp();
                 isActiveForCountdown = false;
             } 
 

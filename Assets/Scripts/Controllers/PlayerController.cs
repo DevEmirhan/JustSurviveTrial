@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Space(10)][Header("Bindings")]
+    [Space(10)] [Header("Bindings")]
     [SerializeField] private GameObject playerModel;
     [SerializeField] private Rigidbody myRb;
     [SerializeField] private Joystick joystick;
     [SerializeField] private Animator playerAnim;
     [SerializeField] private GameObject walkIndicator;
+    [HideInInspector] public int keyRequirement;
+    [HideInInspector] public bool isCollectedKeys = false;
 
     [Space(10)][Header("Arrangements")]
     [SerializeField] private float speedNormal;
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private float playerSpeed;
     private bool IsActive;
-    private bool isCollectedKeys;
+    private int collectedKeyCount;
     private bool cameraZoomed;
 
     private void Start()
@@ -31,15 +33,12 @@ public class PlayerController : MonoBehaviour
         playerSpeed = speedNormal;
     }
 
-    public void StartGame()
+    public void StartGame(int keyCount)
     {
-        //PlayerAccount.Module.Refresh();
         IsActive = true;
         playerSpeed = speedNormal;
         myRb.isKinematic = false;
-        //agent.gameObject.SetActive(true);
-        //agent.StartGame();
-        //cam.StartGame();
+        keyRequirement = keyCount;
     }
 
     public void SetPlayerPosition(Vector3 pos, Quaternion rot)
@@ -57,9 +56,11 @@ public class PlayerController : MonoBehaviour
     {
         //agent.gameObject.SetActive(false);
         playerAnim.Rebind();
+        collectedKeyCount = 0;
         playerAnim.speed = 1f;
         myRb.isKinematic = true;
         IsActive = false;
+        isCollectedKeys = false;
     }
 
     // Update is called once per frame
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
             if(other.gameObject.tag == "Key")
             {
                 Destroy(other.gameObject);
-                UIManager.Instance.UpdateKeys();
+                CheckKeyCount();
             } else if(other.gameObject.tag == "Speed")
             {
                 Destroy(other.gameObject);
@@ -126,6 +127,19 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    private void CheckKeyCount()
+    {
+        collectedKeyCount++;
+        UIManager.Instance.UpdateKeys();
+        if (collectedKeyCount == keyRequirement)
+        {
+            StartCoroutine(WinSequence());
+        }
+    }
+    public void TimesUp()
+    {
+        StartCoroutine(TimesUpSequence());
+    }
     IEnumerator SpeedBoost()
     {
         playerSpeed = speedBoosted;
@@ -134,11 +148,26 @@ public class PlayerController : MonoBehaviour
         playerSpeed = speedNormal;
         playerAnim.speed /= 1.5f;
     }
+    IEnumerator TimesUpSequence()
+    {
+        IsActive = false;
+        playerAnim.Play("Crying");
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.GameOver();
+    }
     IEnumerator DeathSequence()
     {
         IsActive = false;
         playerAnim.Play("Dead");
         yield return new WaitForSeconds(3f);
         GameManager.Instance.GameOver();
+    }
+    IEnumerator WinSequence()
+    {
+        IsActive = false;
+        isCollectedKeys = true;
+        playerAnim.Play("Dance");
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.WinGame();
     }
 }

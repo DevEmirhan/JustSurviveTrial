@@ -1043,6 +1043,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205448061}
   m_CullTransparentMesh: 1
+--- !u!114 &252520236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1308537620856736496, guid: be35f6753ea4d6f449414687aba6397a, type: 3}
+  m_PrefabInstance: {fileID: 1308537621041622492}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f16698c8b40564bb0d7f79f6070b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &265502794
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,8 +2417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 902999002}
   levels: {fileID: 11400000, guid: 3a278eec03bdc2e44b3b4095d5c032df, type: 2}
-  isDebugLevel: 1
-  testLevel: {fileID: 219197081591854003}
+  isDebugLevel: 0
+  testLevel: {fileID: 252520236}
 --- !u!1 &627035305
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,6 +3521,8 @@ MonoBehaviour:
   joystick: {fileID: 8135886327640439916}
   playerAnim: {fileID: 166342582}
   walkIndicator: {fileID: 916260616}
+  keyRequirement: 0
+  isCollectedKeys: 0
   speedNormal: 3
   speedBoosted: 5
   boostDuration: 3
@@ -8321,17 +8334,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &219197081591854003 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3119247139329531617, guid: 280f7083bb267a94eb8708fab259fb4f, type: 3}
-  m_PrefabInstance: {fileID: 2901290311688285522}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f16698c8b40564bb0d7f79f6070b90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &366175169198502115
 Transform:
   m_ObjectHideFlags: 0
@@ -8759,6 +8761,10 @@ PrefabInstance:
     - target: {fileID: 3119247139329531623, guid: 280f7083bb267a94eb8708fab259fb4f, type: 3}
       propertyPath: m_Name
       value: Level3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119247139329531623, guid: 280f7083bb267a94eb8708fab259fb4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280f7083bb267a94eb8708fab259fb4f, type: 3}
