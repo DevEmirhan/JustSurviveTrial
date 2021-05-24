@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f16698c8b40564bb0d7f79f6070b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinValue: 100
   levelTimeLimit: 60
   keyRequirement: 4
   playerStartPos: {fileID: 2853628842112082501}

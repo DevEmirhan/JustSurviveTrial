@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public int coinValue = 50;
     public float levelTimeLimit = 30f;
     public int keyRequirement = 3;
     public Transform playerStartPos;

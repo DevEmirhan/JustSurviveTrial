@@ -90,6 +90,7 @@ public class GameCoordinator : MonoBehaviour
     public void GameOver()
     {
         currentLevel.EndGame();
+        CameraManager.Instance.ActivateCamera(2);
         //playerController.GameOver();
         //Reload();
 
@@ -97,8 +98,10 @@ public class GameCoordinator : MonoBehaviour
     public void WinGame()
     {
         currentLevel.EndGame();
+        CameraManager.Instance.ActivateCamera(2);
         //playerController.WinGame();
         SaveManager.Instance.CurrentSave.CurrentLevel++;
+        SaveManager.Instance.CurrentSave.CoinAmount += currentLevel.coinValue;
         SaveManager.Instance.Save();
         //PlayerPrefs.SetInt("levelIndex", PlayerPrefs.GetInt("levelIndex") + 1);
         //PlayerPrefs.SetInt("coinCount", PlayerPrefs.GetInt("coinCount") + PlayerController.Instance.collectedCoinCount);
