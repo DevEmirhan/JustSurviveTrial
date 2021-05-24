@@ -91,7 +91,7 @@ public class GameCoordinator : MonoBehaviour
     {
         currentLevel.EndGame();
         //playerController.GameOver();
-        Reload();
+        //Reload();
 
     }
     public void WinGame()
@@ -102,7 +102,7 @@ public class GameCoordinator : MonoBehaviour
         SaveManager.Instance.Save();
         //PlayerPrefs.SetInt("levelIndex", PlayerPrefs.GetInt("levelIndex") + 1);
         //PlayerPrefs.SetInt("coinCount", PlayerPrefs.GetInt("coinCount") + PlayerController.Instance.collectedCoinCount);
-        Reload();
+        //Reload();
     }
 
 }

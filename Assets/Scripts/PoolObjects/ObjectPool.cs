@@ -79,13 +79,16 @@ public class ObjectPool : MonoBehaviour
     }
     public void DismissAllObjs()
     {
-        if (poolContainer.childCount > 0)
-        {
-            foreach (PoolObject obj in poolContainer.transform)
-            {
-                obj.Dismiss();
-            }
-        }
+
+        //foreach (PoolObject obj in poolContainer.transform)
+        //{
+        //    if (obj.isActiveAndEnabled)
+        //    {
+
+        //        obj.Dismiss();
+        //    }
+        //}
+
 
     }
 }

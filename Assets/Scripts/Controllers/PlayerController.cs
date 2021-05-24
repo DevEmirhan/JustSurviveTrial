@@ -107,7 +107,10 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 StartCoroutine(SpeedBoost());
-            } else if(other.gameObject.tag == "Death")
+            } else if(other.gameObject.tag == "Trap")
+            {
+                StartCoroutine(DeathSequence());
+            } else if (other.gameObject.tag == "Death")
             {
                 StartCoroutine(DeathSequence());
             }

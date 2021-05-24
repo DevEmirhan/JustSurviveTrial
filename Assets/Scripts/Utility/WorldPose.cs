@@ -5,10 +5,10 @@ using UnityEngine;
 public class WorldPose : MonoBehaviour
 {
     [ExecuteInEditMode]
-
+    [SerializeField] float radius = 0.5f;
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(gameObject.transform.position, 1f);
+        Gizmos.DrawSphere(gameObject.transform.position, radius);
     }
 }

@@ -8,12 +8,17 @@ public class Level : MonoBehaviour
     public int keyRequirement = 3;
     public Transform playerStartPos;
     [SerializeField] private List<Trap> obstacles = new List<Trap>();
+    [SerializeField] private List<Enemy> enemies = new List<Enemy>();
 
     public void StartGame()
     {
         foreach (var obs in obstacles)
         {
             obs.ActivateTrap();
+        }
+        foreach(var enemy in enemies)
+        {
+            enemy.ActivateEnemy();
         }
     }
 
@@ -22,6 +27,10 @@ public class Level : MonoBehaviour
         foreach (var obs in obstacles)
         {
             obs.DeactivateTrap();
+        }
+        foreach (var enemy in enemies)
+        {
+            enemy.DeactivateEnemy();
         }
     }
 }

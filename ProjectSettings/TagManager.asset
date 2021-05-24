@@ -8,6 +8,7 @@ TagManager:
   - Speed
   - Safe
   - Death
+  - Trap
   layers:
   - Default
   - TransparentFX
