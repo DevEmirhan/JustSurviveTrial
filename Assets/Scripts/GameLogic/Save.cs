@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
-    public int CurrentLevel = 1;
+    public int CurrentLevel = 0;
     public int RandomLoadedLevel = 1;
     public int CoinAmount = 0;
     public int selectedColor = 0;
