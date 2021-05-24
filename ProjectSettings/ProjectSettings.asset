@@ -146,7 +146,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.GazozGames.EDTemplateGame
+    Android: com.GazozGames.JustSurvivalTrial
     Standalone: com.GazozGames.EDTemplateGame
   buildNumber:
     Standalone: 0
@@ -322,7 +322,9 @@ PlayerSettings:
       m_Height: 36
       m_Kind: 0
       m_SubKind: 
-    - m_Textures: []
+    - m_Textures:
+      - {fileID: 2800000, guid: 70048c57d72b39345b7c56b68d43dac7, type: 3}
+      - {fileID: 2800000, guid: 61592284e244e7b4188f793fec34178d, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
